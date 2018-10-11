@@ -63,32 +63,39 @@ nbsphinx_prolog = r"""
 
 .. raw:: latex
 
-    \vfil\penalty-1\vfilneg
     \par
-    \smallskip
-    \noindent\textcolor{gray}{\scriptsize
-    The following section was generated from
-    \sphinxcode{\sphinxupquote{\strut{}{{ docname | escape_latex }}}}.}
-    \par\nointerlineskip\kern-1ex
-    \noindent\textcolor{gray}{\rule{\textwidth}{0.4pt}}
-    \par\unskip\kern-1ex
-    \makeatletter\@setminipage\makeatother
+    \makeatletter
+      \addpenalty\@secpenalty
+      \@tempskipa 2.3ex \@plus .2ex\relax
+      \addvspace\@tempskipa
+    {\color{gray}\scriptsize
+    \vbox{\parskip\z@skip\hsize\linewidth
+    \noindent The following section was generated from
+    \sphinxcode{\sphinxupquote{\strut{}{{ docname | escape_latex }}}}.\par
+    \kern -1ex % this 1ex depends on \scriptsize value
+    \noindent\rule{\hsize}{0.4pt}%
+    \par
+    % add here \kern for negative or positive extra vertical space if needed
+    }}\@nobreaktrue\everypar{\@nobreakfalse}\nobreak
+    \makeatother
 """
 
 # This is processed by Jinja2 and inserted after each notebook
 nbsphinx_epilog = r"""
 .. raw:: latex
 
-    \makeatletter\@minipagefalse\makeatother
-    \par\nointerlineskip
-    \noindent\textcolor{gray}{\rule{\textwidth}{0.4pt}}
-    \par\nointerlineskip\kern-1ex
-    \noindent\textcolor{gray}{\scriptsize\hfill
-    End of \sphinxcode{\sphinxupquote{\strut
-    {{ env.doc2path(env.docname, base='doc') | escape_latex }}}}.}
     \par
-    \smallskip
-    \vfil\penalty-1\vfilneg
+    \makeatletter
+    {\color{gray}%
+    \scriptsize
+    \nobreak\vtop{%
+    \kern -1ex
+    \parskip\z@skip\hsize\linewidth\parfillskip\z@skip
+    \noindent\rule{\hsize}{0.4pt}\par
+    \noindent\hfill End of \sphinxcode{\sphinxupquote{\strut
+    {{ env.doc2path(env.docname, base='doc') | escape_latex }}}}.\par
+    }}\makeatother
+    \bigskip % or whatever is needed
 """
 
 # Input prompt for code cells. "%s" is replaced by the execution count.
