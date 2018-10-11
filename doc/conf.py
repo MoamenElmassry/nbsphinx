@@ -64,6 +64,7 @@ nbsphinx_prolog = r"""
 .. raw:: latex
 
     \par
+    \needspace{3\baselineskip}
     \makeatletter
       \addpenalty\@secpenalty
       \@tempskipa 2.3ex \@plus .2ex\relax
@@ -72,11 +73,10 @@ nbsphinx_prolog = r"""
     \vbox{\parskip\z@skip\hsize\linewidth
     \noindent The following section was generated from
     \sphinxcode{\sphinxupquote{\strut{}{{ docname | escape_latex }}}}.\par
-    \kern -1ex % this 1ex depends on \scriptsize value
+    \kern -1ex
     \noindent\rule{\hsize}{0.4pt}%
     \par
-    % add here \kern for negative or positive extra vertical space if needed
-    }}\@nobreaktrue\everypar{\@nobreakfalse}\nobreak
+    }}\@nobreaktrue\everypar{\@nobreakfalse\everypar{}}\nobreak
     \makeatother
 """
 
@@ -86,16 +86,17 @@ nbsphinx_epilog = r"""
 
     \par
     \makeatletter
-    {\color{gray}%
-    \scriptsize
-    \nobreak\vtop{%
-    \kern -1ex
+    {\color{gray}\scriptsize
+    \nobreak\vtop{\kern -1ex
     \parskip\z@skip\hsize\linewidth\parfillskip\z@skip
     \noindent\rule{\hsize}{0.4pt}\par
     \noindent\hfill End of \sphinxcode{\sphinxupquote{\strut
     {{ env.doc2path(env.docname, base='doc') | escape_latex }}}}.\par
     }}\makeatother
-    \bigskip % or whatever is needed
+    \kern-\baselineskip
+    \penalty-9999
+    \kern\baselineskip
+    \bigskip
 """
 
 # Input prompt for code cells. "%s" is replaced by the execution count.
