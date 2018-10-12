@@ -69,15 +69,13 @@ nbsphinx_prolog = r"""
       \addpenalty\@secpenalty
       \@tempskipa 2.3ex \@plus .2ex\relax
       \addvspace\@tempskipa
-    {\color{gray}\scriptsize
-    \vbox{\parskip\z@skip\hsize\linewidth
+    {\color{gray}\parskip\z@skip\scriptsize
     \noindent The following section was generated from
-    \sphinxcode{\sphinxupquote{\strut{}{{ docname | escape_latex }}}}.\par
-    \kern -1ex
-    \noindent\rule{\hsize}{0.4pt}%
+    \sphinxcode{\sphinxupquote{\strut{}{{ docname | escape_latex }}}}\dotfill
     \par
-    }}\@nobreaktrue\everypar{\@nobreakfalse\everypar{}}\nobreak
+    }\@nobreaktrue\everypar{\@nobreakfalse\everypar{}}\nobreak
     \makeatother
+    \vskip-\parskip\nobreak
 """
 
 # This is processed by Jinja2 and inserted after each notebook
@@ -86,13 +84,10 @@ nbsphinx_epilog = r"""
 
     \par
     \makeatletter
-    {\color{gray}\scriptsize
-    \nobreak\vtop{\kern -1ex
-    \parskip\z@skip\hsize\linewidth\parfillskip\z@skip
-    \noindent\rule{\hsize}{0.4pt}\par
-    \noindent\hfill End of \sphinxcode{\sphinxupquote{\strut
-    {{ env.doc2path(env.docname, base='doc') | escape_latex }}}}.\par
-    }}\makeatother
+    {\color{gray}\parskip\z@skip\scriptsize
+    \nobreak\noindent\dotfill\sphinxcode{\sphinxupquote{\strut
+    {{ env.doc2path(env.docname, base='doc') | escape_latex }}}} ends here.\par
+    }\makeatother
     \kern-\baselineskip
     \penalty-9999
     \kern\baselineskip
