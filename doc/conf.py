@@ -64,6 +64,7 @@ nbsphinx_prolog = r"""
 .. raw:: latex
 
     \par
+    \bigskip
     \needspace{3\baselineskip}
     \makeatletter
       \addpenalty\@secpenalty
@@ -91,7 +92,6 @@ nbsphinx_epilog = r"""
     \kern-\baselineskip
     \penalty-9999
     \kern\baselineskip
-    \bigskip
 """
 
 # Input prompt for code cells. "%s" is replaced by the execution count.
