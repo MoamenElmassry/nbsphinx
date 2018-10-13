@@ -86,17 +86,23 @@ nbsphinx_epilog = r"""
     \par
     \makeatletter
     {\color{gray}\parskip\z@skip\scriptsize
-    \nobreak\noindent\dotfill\sphinxcode{\sphinxupquote{\strut
-    {{ env.doc2path(env.docname, base='doc') | escape_latex }}}} ends here.\par
-    }\dimen@\baselineskip
-    \vskip\z@\@minus\dimen@
-    \penalty-100
-    \vskip\z@\@minus-\dimen@
-    \vskip-\dimen@
-    \penalty9999
-    \vskip\dimen@
-    \vskip\z@skip
-    \makeatother
+    \nobreak
+    \dimen@\pagegoal \advance\dimen@-\pagetotal
+    \ifdim\dimen@<\baselineskip
+      \nointerlineskip
+      \def\nbsphinx@tmp{\kern-\baselineskip
+        \nobreak\vskip\z@\@plus .0001fil
+        \penalty-9999
+        \vskip\z@\@plus -.0001fil
+        \kern\baselineskip}
+    \else
+      \def\nbsphinx@tmp{\penalty-100}
+    \fi
+    \noindent\dotfill\sphinxcode{\sphinxupquote{\strut
+    {{ env.doc2path(env.docname, base='doc') | escape_latex }}}}
+    ends here.\par
+    \nbsphinx@tmp
+    }\makeatother
 """
 
 # Input prompt for code cells. "%s" is replaced by the execution count.
