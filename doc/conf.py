@@ -88,10 +88,15 @@ nbsphinx_epilog = r"""
     {\color{gray}\parskip\z@skip\scriptsize
     \nobreak\noindent\dotfill\sphinxcode{\sphinxupquote{\strut
     {{ env.doc2path(env.docname, base='doc') | escape_latex }}}} ends here.\par
-    }\makeatother
-    \kern-\baselineskip
-    \penalty-9999
-    \kern\baselineskip
+    }\dimen@\baselineskip
+    \vskip\z@\@minus\dimen@
+    \penalty-100
+    \vskip\z@\@minus-\dimen@
+    \vskip-\dimen@
+    \penalty9999
+    \vskip\dimen@
+    \vskip\z@skip
+    \makeatother
 """
 
 # Input prompt for code cells. "%s" is replaced by the execution count.
