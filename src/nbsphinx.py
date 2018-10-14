@@ -329,6 +329,65 @@ LATEX_PREAMBLE = r"""
     \fi}
 \newlength\nbsphinxcodecellspacing
 \setlength{\nbsphinxcodecellspacing}{0pt}
+
+% Define support macros for attaching opening and closing lines to notebooks
+\makeatletter
+\newcommand{\nbsphinxstartnotebook}[1]{%
+    \par
+    \bigskip
+    % reserve some space at bottom of page, else start new page
+    \needspace{3\baselineskip}
+    % mimick vertical spacing from \section command
+      \addpenalty\@secpenalty
+      \@tempskipa 2.3ex \@plus .2ex\relax
+      \addvspace\@tempskipa
+    {\color{gray}\parskip\z@skip\scriptsize
+     \noindent The following section was generated from
+               \sphinxcode{\sphinxupquote{#1}}\dotfill
+     \par }%
+    % if notebook starts with a \section, prevent it from adding extra space
+    \@nobreaktrue\everypar{\@nobreakfalse\everypar{}}%
+    % compensate the parskip which will get inserted by next paragraph
+    \nobreak\vskip-\parskip
+    % do not break here
+    \nobreak
+}% end of \nbsphinxstartnotebook
+
+\newcommand{\nbsphinxstopnotebook}[1]{%
+    \par
+    {\color{gray}\parskip\z@skip\scriptsize
+    \nobreak % it updates page totals
+    \dimen@\pagegoal \advance\dimen@-\pagetotal
+    \ifdim\dimen@<\baselineskip
+      % little space left
+      \nointerlineskip
+      \def\nbsphinx@tmp{% will get executed after the closing line
+        % hide the height of the closing line
+        \kern-\baselineskip
+        % try to push down the footnote insert by counteracting \raggedbottom
+        % but afaik only a hack into the shipout routine could improve further
+        % (as is done by "bottom" option of footmisc package)
+        \nobreak\vskip\z@\@plus .001fil
+        % make a pagebreak very favourable here, don't use -10000, else
+        % may end up on next page and break that one near top...
+        \penalty-9999
+        % if TeX decides to move the closing line to next page (necessarily
+        % together with some material above it) the above vskip and negative
+        % kern must get compensated; if on the other hand the pagebreak
+        % happens here, they get discarded and don't offset the next page.
+        \vskip\z@\@plus -.001fil
+        \kern\baselineskip
+        }%
+    \else
+      % there is enough room to trust TeX will not break above closing line,
+      % still encourage it strongly into breaking page after closing line.
+      \def\nbsphinx@tmp{\penalty-100 }%
+    \fi
+    \noindent\dotfill\sphinxcode{\sphinxupquote{#1}} ends here.\par
+    \nbsphinx@tmp
+    }% end of usage of script size and color
+}% end of \nbsphinxstopnotebook
+\makeatother
 """
 
 

@@ -63,46 +63,16 @@ nbsphinx_prolog = r"""
 
 .. raw:: latex
 
-    \par
-    \bigskip
-    \needspace{3\baselineskip}
-    \makeatletter
-      \addpenalty\@secpenalty
-      \@tempskipa 2.3ex \@plus .2ex\relax
-      \addvspace\@tempskipa
-    {\color{gray}\parskip\z@skip\scriptsize
-    \noindent The following section was generated from
-    \sphinxcode{\sphinxupquote{\strut{}{{ docname | escape_latex }}}}\dotfill
-    \par
-    }\@nobreaktrue\everypar{\@nobreakfalse\everypar{}}\nobreak
-    \makeatother
-    \vskip-\parskip\nobreak
+    \nbsphinxstartnotebook{\strut
+    {{ docname | escape_latex }}}
 """
 
 # This is processed by Jinja2 and inserted after each notebook
 nbsphinx_epilog = r"""
 .. raw:: latex
 
-    \par
-    \makeatletter
-    {\color{gray}\parskip\z@skip\scriptsize
-    \nobreak
-    \dimen@\pagegoal \advance\dimen@-\pagetotal
-    \ifdim\dimen@<\baselineskip
-      \nointerlineskip
-      \def\nbsphinx@tmp{\kern-\baselineskip
-        \nobreak\vskip\z@\@plus .0001fil
-        \penalty-9999
-        \vskip\z@\@plus -.0001fil
-        \kern\baselineskip}
-    \else
-      \def\nbsphinx@tmp{\penalty-100}
-    \fi
-    \noindent\dotfill\sphinxcode{\sphinxupquote{\strut
-    {{ env.doc2path(env.docname, base='doc') | escape_latex }}}}
-    ends here.\par
-    \nbsphinx@tmp
-    }\makeatother
+    \nbsphinxstopnotebook{\strut
+    {{ env.doc2path(env.docname, base='doc') | escape_latex }}}
 """
 
 # Input prompt for code cells. "%s" is replaced by the execution count.
