@@ -331,20 +331,20 @@ LATEX_PREAMBLE = r"""
 \setlength{\nbsphinxcodecellspacing}{0pt}
 
 % Define support macros for attaching opening and closing lines to notebooks
+\newsavebox\nbsphinxbox
 \makeatletter
 \newcommand{\nbsphinxstartnotebook}[1]{%
     \par
     \bigskip
+    % measure needed space
+    \setbox\nbsphinxbox\vbox{{#1\par}}
     % reserve some space at bottom of page, else start new page
-    \needspace{3\baselineskip}
+    \needspace{\dimexpr2.5\baselineskip+\ht\nbsphinxbox+\dp\nbsphinxbox}
     % mimick vertical spacing from \section command
       \addpenalty\@secpenalty
       \@tempskipa 2.3ex \@plus .2ex\relax
       \addvspace\@tempskipa
-    {\color{gray}\parskip\z@skip\scriptsize
-     \noindent The following section was generated from
-               \sphinxcode{\sphinxupquote{#1}}\dotfill
-     \par }%
+    \unvbox\nbsphinxbox
     % if notebook starts with a \section, prevent it from adding extra space
     \@nobreaktrue\everypar{\@nobreakfalse\everypar{}}%
     % compensate the parskip which will get inserted by next paragraph

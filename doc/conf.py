@@ -63,8 +63,18 @@ nbsphinx_prolog = r"""
 
 .. raw:: latex
 
-    \nbsphinxstartnotebook{\strut
-    {{ docname | escape_latex }}}
+    \nbsphinxstartnotebook{\scriptsize\strut
+    \textcolor{gray}{The following section was generated from
+        The following section was generated from
+        The following section was generated from
+        The following section was generated from}
+
+    \textcolor{blue}{The following section was generated from
+        The following section was generated from
+        The following section was generated from
+       {\sphinxcode{\sphinxupquote{\strut{}{{ docname | escape_latex }}}}}\relax
+        \dotfill }
+    }
 """
 
 # This is processed by Jinja2 and inserted after each notebook
